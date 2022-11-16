@@ -49,7 +49,7 @@ export default function HangmanDrawing({
       {BODY_PARTS.slice(0, numberOfGuesses)}
       <div className="h-10 w-2 bg-neutral-900 ml-[248px] absolute" />
       <div className="h-2 w-[124px] bg-neutral-900 ml-[124px]" />
-      <div className="h-96 w-2 bg-neutral-900 ml-[124px]" />
+      <div className="h-64 w-2 bg-neutral-900 ml-[124px]" />
       <div className="h-2 w-64 bg-neutral-900" />
     </div>
   );

@@ -13,14 +13,19 @@ export default function App() {
     (letter) => !wordToGuess.includes(letter)
   );
 
+  const isLoser = incorrectLetters.length >= 6;
+  const isWinner = wordToGuess
+    .split("")
+    .every((letter) => guessedLetters.includes(letter));
+
   const addGuessedLetter = useCallback(
     (letter: string) => {
-      if (guessedLetters.includes(letter)) {
+      if (guessedLetters.includes(letter) || isLoser || isWinner) {
         return;
       }
       setGuessedLetters((currentLetters) => [...currentLetters, letter]);
     },
-    [guessedLetters]
+    [guessedLetters, isWinner, isLoser]
   );
 
   useEffect(() => {
@@ -42,10 +47,19 @@ export default function App() {
   }, [guessedLetters]);
 
   return (
-    <div className="App bg-zinc-700 min-h-screen w-screen flex flex-col gap-14 justify-center items-center">
+    <div className="App bg-zinc-700 min-h-screen w-screen flex flex-col gap-10 justify-center items-center p-10">
+      <h1
+        className={`uppercase result w-full text-5xl font-bold flex justify-center ${
+          isWinner ? "animate-bounce text-green-600 " : ""
+        } ${isLoser ? "animate-ping text-red-600" : ""}`}
+      >
+        {isWinner && "Winner"}
+        {isLoser && "Loser"}
+      </h1>
       <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
       <HangmanWord guessedLetters={guessedLetters} wordToGuess={wordToGuess} />
       <Keyboard
+        disabled={isWinner || isLoser}
         activeLetters={guessedLetters.filter((letter) =>
           wordToGuess.includes(letter)
         )}

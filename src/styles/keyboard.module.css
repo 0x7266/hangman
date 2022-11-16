@@ -1,0 +1,4 @@
+.btn:hover:not(:disabled),
+.btn:focus:not(:disabled) {
+  background-color: rgba(23, 23, 23, 0.5);
+}

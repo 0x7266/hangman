@@ -1,3 +1,5 @@
+import styles from "../styles/keyboard.module.css";
+
 const KEYS = [
   "a",
   "b",
@@ -29,12 +31,14 @@ const KEYS = [
 
 type KeyboardProps = {
   activeLetters: string[];
+  disabled?: boolean;
   inactiveLetters: string[];
   addGuessedLetter: (letter: string) => void;
 };
 
 export default function Keyboard({
   activeLetters,
+  disabled = false,
   inactiveLetters,
   addGuessedLetter,
 }: KeyboardProps) {
@@ -46,10 +50,12 @@ export default function Keyboard({
         return (
           <button
             key={letter}
-            className={`keyboard-letter uppercase border-2 rounded border-neutral-900 bg-slate-500 shadow-md aspect-square p-1 w-12 text-xl visited:opacity-4 active:bg-neutral-900 hover:bg-slate-600 ${
-              isActive ? "bg-green-900 disabled:bg-green-900" : ""
-            } ${isInactive ? "opacity-20 disabled:bg-slate-800" : ""}`}
-            disabled={isInactive || isActive}
+            disabled={isInactive || isActive || disabled}
+            className={`${
+              styles.btn
+            } keyboard-letter uppercase border-2 rounded aspect-square p-1 w-12 text-xl ${
+              isActive ? "bg-green-900" : ""
+            } ${isInactive ? "opacity-20" : ""}`}
             onClick={() => addGuessedLetter(letter)}
           >
             {letter}
